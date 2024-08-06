@@ -16,9 +16,53 @@ export const LoginPage = () => {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const { handleLogin } = useLogin();
+  const [queryParams] = useSearchParams();
 
   const handleConfirm = async () => {
     handleLogin(id, password);
+
+    axios
+      .post("https://pnuece.pnu.app/api/members/login", {
+        email: id,
+        password: password,
+      })
+      .then((response) => {
+        const token = response.data.token;
+        localStorage.setItem("token", token);
+        authSessionStorage.set({ token, id });
+      })
+      .catch((error) => {
+        console.error("Login failed:", error);
+      });
+
+    const redirectUrl =
+      queryParams.get("redirect") ?? `${window.location.origin}/`;
+    return window.location.replace(redirectUrl);
+  };
+
+  const handleKakaoLogin = () => {
+    const url = "https://pnuece.pnu.app/api/oauth/kakao/code";
+    const parsedUrl = new URL(url);
+    console.log(parsedUrl);
+    const params = new URLSearchParams(parsedUrl.search);
+    const code = params.get("code");
+
+    console.log(code);
+
+    axios
+      .get("https://pnuece.pnu.app/api/oauth/kakao/code")
+      .then((response) => {
+        const kakaoToken = response.data.token;
+
+        console.log(kakaoToken);
+
+        localStorage.setItem("token", kakaoToken);
+        authSessionStorage.set(kakaoToken);
+        return window.location.replace("/home");
+      })
+      .catch((error) => {
+        console.error("Kakao Login failed:", error);
+      });
   };
 
   const handleKakaoLogin = () => {

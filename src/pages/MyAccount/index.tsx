@@ -1,11 +1,10 @@
-import styled from '@emotion/styled';
+import styled from "@emotion/styled";
 
-import { Button } from '@/components/common/Button';
-import { Spacing } from '@/components/common/layouts/Spacing';
-import { useAuth } from '@/provider/Auth';
-import { RouterPath } from '@/routes/path';
-import { authSessionStorage } from '@/utils/storage';
-import { useState, useEffect } from 'react';
+import { Button } from "@/components/common/Button";
+import { Spacing } from "@/components/common/layouts/Spacing";
+import { RouterPath } from "@/routes/path";
+import { authSessionStorage } from "@/utils/storage";
+import { useState, useEffect } from "react";
 
 type WishlistItem = {
   id: number;
@@ -17,11 +16,11 @@ type WishlistItem = {
 };
 
 export const MyAccountPage = () => {
-  const authInfo = useAuth();
   const [wishlist, setWishlist] = useState<WishlistItem[]>([]);
+  const authData = authSessionStorage.get();
 
   useEffect(() => {
-    const savedWishlist = sessionStorage.getItem('wishlist');
+    const savedWishlist = sessionStorage.getItem("wishlist");
     if (savedWishlist) {
       setWishlist(JSON.parse(savedWishlist));
     }
@@ -36,7 +35,7 @@ export const MyAccountPage = () => {
 
   return (
     <Wrapper>
-      {authInfo?.name}님 안녕하세요! <Spacing height={64} />
+      {authData?.id}님 안녕하세요! <Spacing height={6} />
       <WishlistWrapper>
         <h2>관심 목록</h2>
         {wishlist.length === 0 ? (
@@ -60,7 +59,7 @@ export const MyAccountPage = () => {
         theme="darkGray"
         onClick={handleLogout}
         style={{
-          maxWidth: '200px',
+          maxWidth: "200px",
         }}
       >
         로그아웃

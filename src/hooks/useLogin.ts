@@ -26,7 +26,7 @@ export const useLogin = () => {
       });
 
       const { token } = response.data;
-      authSessionStorage.set(token);
+      authSessionStorage.set({ token, id });
 
       const redirectUrl =
         queryParams.get("redirect") ?? `${window.location.origin}/`;
