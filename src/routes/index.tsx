@@ -2,6 +2,7 @@ import {
   createBrowserRouter,
   Navigate,
   RouterProvider,
+  BrowserRouter,
 } from "react-router-dom";
 
 import { Layout } from "@/components/features/Layout";
@@ -75,5 +76,9 @@ const router = createBrowserRouter([
 ]);
 
 export const Routes = () => {
-  return <RouterProvider router={router} />;
+  return (
+    <BrowserRouter basename="/react-deploy">
+      <RouterProvider router={router} />
+    </BrowserRouter>
+  );
 };
