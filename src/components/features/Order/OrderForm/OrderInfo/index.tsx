@@ -1,14 +1,14 @@
-import { Divider } from '@chakra-ui/react';
-import styled from '@emotion/styled';
+import { Divider } from "@chakra-ui/react";
+import styled from "@emotion/styled";
 
-import { useGetProductDetail } from '@/api/hooks/useGetProductDetail';
-import { Button } from '@/components/common/Button';
-import { Spacing } from '@/components/common/layouts/Spacing';
-import type { OrderHistory } from '@/types';
+import { useGetProductDetail } from "@/api/hooks/useGetProductDetail";
+import { Button } from "@/components/common/Button";
+import { Spacing } from "@/components/common/layouts/Spacing";
+import type { OrderHistory } from "@/types";
 
-import { HeadingText } from '../Common/HeadingText';
-import { LabelText } from '../Common/LabelText';
-import { CashReceiptFields } from '../Fields/CashReceiptFields';
+import { HeadingText } from "../Common/HeadingText";
+import { LabelText } from "../Common/LabelText";
+import { CashReceiptFields } from "../Fields/CashReceiptFields";
 
 type Props = {
   orderHistory: OrderHistory;
@@ -30,6 +30,14 @@ export const OrderFormOrderInfo = ({ orderHistory }: Props) => {
       <ItemWrapper>
         <LabelText>최종 결제금액</LabelText>
         <HeadingText>{totalPrice}원</HeadingText>
+      </ItemWrapper>
+      <Divider color="#ededed" />
+      <ItemWrapper>
+        <LabelText>쇼핑포인트 사용</LabelText>
+        <PointContainer>
+          <PointInput type="text" placeholder="0 P" />
+          <UsePointButton>전액사용</UsePointButton>
+        </PointContainer>
       </ItemWrapper>
       <Divider color="#ededed" />
       <Spacing height={32} />
@@ -56,4 +64,31 @@ const ItemWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+`;
+
+const PointContainer = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+`;
+
+const PointInput = styled.input`
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #dcdcdc;
+  border-radius: 4px;
+  margin-right: 8px;
+  text-align: right; /* 오른쪽 정렬 */
+`;
+
+const UsePointButton = styled.button`
+  padding: 8px 16px;
+  border: 1px solid #dcdcdc;
+  border-radius: 4px;
+  background-color: transparent;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f0f0f0;
+  }
 `;
